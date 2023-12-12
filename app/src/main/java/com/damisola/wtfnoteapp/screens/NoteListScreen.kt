@@ -21,11 +21,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 import com.damisola.wtfnoteapp.components.NoteItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NoteListScreen(){
+fun NoteListScreen(navController: NavController){
     Scaffold(
         topBar = {
             TopAppBar(title = { Text(text = "WTF Note App") },
@@ -60,10 +61,11 @@ fun NoteListScreen(){
                 NoteItem()
                 NoteItem()
                 NoteItem()
+                NoteItem()
             }
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = { /*TODO*/ }) {
+            FloatingActionButton(onClick = { navController.navigate("add-note") }) {
                Icon(imageVector = Icons.Default.Add,
                    contentDescription = "Add New Note" )
                 
@@ -79,7 +81,7 @@ fun NoteListScreenPreview(){
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ){
-        NoteListScreen()
+       // AddNoteScreen()
     }
 
 }
