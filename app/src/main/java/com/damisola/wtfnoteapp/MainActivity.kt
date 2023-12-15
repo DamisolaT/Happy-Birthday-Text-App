@@ -45,20 +45,4 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-@Composable
-fun AppNavigation(){
-    val navController = rememberNavController()
-
-    NavHost(
-        navController = navController,
-        startDestination = "note-list"
-    ){
-        composable("note-list"){
-            NoteListScreen(navController)
-        }
-        composable("add-note"){
-            AddNoteScreen()
-        }
-    }
-}
 

@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
+import com.damisola.wtfnoteapp.Routes
 import com.damisola.wtfnoteapp.components.NoteItem
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -65,7 +66,7 @@ fun NoteListScreen(navController: NavController){
             }
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = { navController.navigate("add-note") }) {
+            FloatingActionButton(onClick = { navController.navigate(Routes.AddNoteRoute) }) {
                Icon(imageVector = Icons.Default.Add,
                    contentDescription = "Add New Note" )
                 

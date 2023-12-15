@@ -18,6 +18,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -27,22 +28,28 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.SemanticsProperties.ImeAction
+import androidx.compose.ui.text.style.TextDirection.Companion.Content
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.damisola.wtfnoteapp.components.NoteItem
 import com.damisola.wtfnoteapp.ui.theme.Purple40
+import com.damisola.wtfnoteapp.view_model.NoteViewModel
+
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddNoteScreen(){
-    var userNote by remember { mutableStateOf("") }
-    var userNote2 by remember { mutableStateOf("") }
+fun AddNoteScreen(navController: NavController){
+    val noteViewModel:NoteViewModel = viewModel()
+    var title by rememberSaveable { mutableStateOf ("") }
+    var content by rememberSaveable { mutableStateOf("") }
 
     Scaffold(
         topBar = {
@@ -50,42 +57,47 @@ fun AddNoteScreen(){
                 colors = TopAppBarDefaults.smallTopAppBarColors(
                     containerColor = Purple40,
                     titleContentColor = Color.White,
-                    )
+                    navigationIconContentColor = Color.White
+                    ),
+                navigationIcon = {
+                    IconButton(onClick = {
+                        noteViewModel.saveNote(title,content)
+                        navController.popBackStack()
+
+                    }) {
+                        Icon(
+                        imageVector = Icons.Default.ArrowBack, contentDescription = "Back Button"
+                        )
+                    }
+                }
             )
         },
-        content = { paddingValues ->
+        content = {paddingValues ->
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
                     .padding(paddingValues)
-                    .verticalScroll(rememberScrollState())
+                    .padding(all = 8.dp)
+                    .fillMaxSize()
             ) {
-                // Add your content here
-                TextField(
-                    value = userNote,
-                    onValueChange = { newUserNote: String -> userNote = newUserNote },
-                    label = { Text("Enter Date") },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
+                OutlinedTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = title,
+                    onValueChange = {value -> title = value},
+                    label = {Text("Note Title")},
                 )
                 TextField(
-                    value = userNote2,
-                    onValueChange = { newUserNote2: String -> userNote2 = newUserNote2 },
-                    label = { Text("Enter your note") },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
+                    modifier = Modifier.fillMaxWidth(),
+                    value = content,
+                    onValueChange = {value -> content = value },
+                    label = { Text( "Note Content")},
                 )
+                
             }
-        },
-        floatingActionButton = {
-            FloatingActionButton(onClick = { /* Handle FAB click */ }) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = "Add Note")
+                
             }
-        }
     )
 }
+
 
 
 
