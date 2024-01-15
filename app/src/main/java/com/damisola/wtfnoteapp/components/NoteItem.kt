@@ -1,6 +1,7 @@
 package com.damisola.wtfnoteapp.components
 
 import android.icu.text.CaseMap.Title
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 
 import androidx.compose.foundation.layout.Column
@@ -18,36 +19,33 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-@Preview
+import androidx.navigation.NavController
+import com.damisola.wtfnoteapp.Routes
+import com.damisola.wtfnoteapp.models.Note
+
+
 @Composable
-fun NoteItem(){
+fun NoteItem(note: Note, navController: NavController){
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
+            .clickable { navController.navigate(Routes.NoteDetails(note.id.toString())) }
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
         ){
-            Row (modifier =Modifier.fillMaxWidth(),
-              horizontalArrangement = Arrangement.SpaceBetween
-            ) {
 
-                Text(
-                    text = "Title of the note",
+            Text(
+                    text = note.title,
                     fontWeight = FontWeight.Black,
-                    textAlign = TextAlign.Start
+
                 )
-                Text(
-                    text = "10:15pm",
-                    fontWeight = FontWeight.Black,
-                    textAlign = TextAlign.End
-                )
+
             }
-                Text(text = "Content of the note will be here lorem ipausm jsks")
+                Text(text = note.title)
 
         }
     }
-}
