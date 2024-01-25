@@ -1,5 +1,8 @@
 package com.damisola.wtfnoteapp.screens
 
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -21,6 +24,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,6 +36,7 @@ import com.damisola.wtfnoteapp.components.NoteItem
 import com.damisola.wtfnoteapp.models.Note
 import com.damisola.wtfnoteapp.view_model.NoteViewModel
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NoteListScreen(navController: NavController){
@@ -66,11 +71,15 @@ fun NoteListScreen(navController: NavController){
         },
         content = { paddingValues ->
            LazyColumn(
-                modifier = Modifier.padding(paddingValues).fillMaxSize()
+                modifier = Modifier
+                    .padding(paddingValues)
+                    .fillMaxSize()
             ) {
                 //Note Items will be here
                 items(listOfNotes){note ->
-                    NoteItem(note = note, navController = navController)
+                    key(note) {
+                        NoteItem(note = note, navController = navController)
+                    }
 
                 }
             }

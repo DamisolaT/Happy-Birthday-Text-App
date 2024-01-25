@@ -18,7 +18,7 @@ object DatabaseConfig {
     }
 }
 
-@Database(entities = [Note::class], version = 1)
+@Database(entities = [Note::class], version = 2)
 abstract class AppDatabase: RoomDatabase(){
     abstract  fun noteDao(): NoteDao
 }

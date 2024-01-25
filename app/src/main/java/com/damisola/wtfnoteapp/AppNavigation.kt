@@ -1,11 +1,9 @@
 package com.damisola.wtfnoteapp
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.damisola.wtfnoteapp.models.Note
 import com.damisola.wtfnoteapp.screens.AddNoteScreen
 import com.damisola.wtfnoteapp.screens.NoteDetailsScreen
 import com.damisola.wtfnoteapp.screens.NoteListScreen
@@ -29,6 +27,7 @@ fun AppNavigation(){
                 noteId = it.arguments!!.getString("noteId")!!
             )
         }
+
     }
 }
  object Routes{
@@ -38,4 +37,5 @@ fun AppNavigation(){
      fun NoteDetails(noteId: String): String{
          return "note-details/$noteId"
      }
+
  }
